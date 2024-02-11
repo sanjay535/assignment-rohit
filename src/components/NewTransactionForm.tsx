@@ -71,6 +71,7 @@ export const NewTransactionForm: React.FC<{
             Please enters the details for the transaction
           </DialogContentText>
           <TextField
+            data-testid='transaction-name'
             autoFocus
             required
             margin='dense'
@@ -83,6 +84,7 @@ export const NewTransactionForm: React.FC<{
             fullWidth
           />
           <TextField
+             data-testid='transaction-amount'
             autoFocus
             required
             margin='dense'
@@ -97,6 +99,7 @@ export const NewTransactionForm: React.FC<{
           <div className='max-w-[100%] my-2'>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                data-testid='transaction-date'
                 disableFuture
                 value={date}
                 onChange={(newValue) => setDate(newValue)}
@@ -109,6 +112,7 @@ export const NewTransactionForm: React.FC<{
           <TextField
             id='description'
             name='description'
+            date-testid='transaction-desc'
             placeholder='Enter transaction description'
             minRows={3}
             maxRows={5}
@@ -126,6 +130,7 @@ export const NewTransactionForm: React.FC<{
               aria-labelledby='demo-row-radio-buttons-group-label'
               name='row-radio-buttons-group'
               value={transactionCategory}
+              data-testid='transaction-category'
               onChange={(e) => setTransactionCategory(e.target.value)}
             >
               <FormControlLabel

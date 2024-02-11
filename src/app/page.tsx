@@ -1,5 +1,4 @@
 import Dashboard from "@/components/Dashboard";
-import Navigation from "@/components/Navigation";
 import React from "react";
 interface HomeProps{
   children:React.ReactNode

@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography,colors } from '@mui/material'
 import React from 'react'
-const handleColor=(color:string)=>{
+export const handleColor=(color:string)=>{
   switch (color) {
     case 'info':
       return colors.lightBlue[300]
@@ -21,12 +21,12 @@ const DashboardAnalyticsCard:React.FC<{
   color:string
 }> = ({color,title, text}) => {
   return (
-    <Card style={{color:handleColor(color)}}  variant="outlined" sx={{ margin:4, display:'flex' }}>
+    <Card data-testid={title} style={{color:handleColor(color)}}  variant="outlined" sx={{ margin:4, display:'flex' }}>
       <CardContent>
-      <Typography variant="subtitle1" component="p">
+      <Typography data-testid="title" variant="subtitle1" component="p">
         {title}
       </Typography>
-        <Typography sx={{fontSize:48, textAlign:'center' }}>{text}</Typography>
+        <Typography data-testid="text" sx={{fontSize:48, textAlign:'center' }}>{text}</Typography>
       </CardContent>
     </Card>
   )
