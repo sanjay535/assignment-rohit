@@ -1,9 +1,15 @@
 'use client';
 import * as React from 'react';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridRowsProp,
+  GridColDef,
+  GridValueFormatterParams,
+} from '@mui/x-data-grid';
 import { transactions } from '@/utils/Data';
-import { Button } from '@mui/material';
+import { Box, Button, colors } from '@mui/material';
 import NewTransactionForm from './NewTransactionForm';
+import dayjs from 'dayjs';
 
 interface TransactionTable {
   id: string;
@@ -13,27 +19,65 @@ interface TransactionTable {
   category: string;
   description: string;
 }
+const cellWidth=1400/5
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'name', headerName: 'Transaction', width: 200 },
-  { field: 'amount', headerName: 'Amount', width: 200 },
-  { field: 'date', headerName: 'Date', width: 200 },
-  { field: 'description', headerName: 'Description', width: 300 },
-  { field: 'category', headerName: 'Category' },
+  {
+    field: 'name',
+    headerName: 'Transaction',
+    width: cellWidth,
+    headerClassName: 'super-app-theme--header',
+  },
+  {
+    field: 'amount',
+    headerName: 'Amount',
+    width: cellWidth,
+    valueFormatter: (params: GridValueFormatterParams<number>) => {
+      if (params.value == null) {
+        return '';
+      }
+      return params.value.toFixed(2);
+    },
+    headerClassName: 'super-app-theme--header',
+  },
+  {
+    field: 'date',
+    headerName: 'Date',
+    width: cellWidth,
+    valueFormatter: (params: GridValueFormatterParams<string>) => {
+      if (params.value == null) {
+        return '';
+      }
+      return dayjs(params.value).format('DD/MM/YYYY');
+    },
+    headerClassName: 'super-app-theme--header',
+  },
+  { field: 'description', headerName: 'Description', width: cellWidth,headerClassName: 'super-app-theme--header', },
+  {
+    field: 'category',
+    headerName: 'Category',
+    valueFormatter: (params: GridValueFormatterParams<string>) => {
+      if (params.value == null) {
+        return '';
+      }
+      return params.value.toUpperCase();
+    },
+    width:cellWidth,
+    headerClassName: 'super-app-theme--header',
+  },
 ];
 
-const TransactionTable:React.FC<{
-  setTotalIncome:(income:number)=>void,
-  setTotalExpenses:(expenses:number)=>void,
-  setTotalSaving:(saving:number)=>void,
-  setTotalTransaction:(count:number)=>void,
-}>=({
+const TransactionTable: React.FC<{
+  setTotalIncome: (income: number) => void;
+  setTotalExpenses: (expenses: number) => void;
+  setTotalSaving: (saving: number) => void;
+  setTotalTransaction: (count: number) => void;
+}> = ({
   setTotalIncome,
   setTotalExpenses,
   setTotalSaving,
   setTotalTransaction,
-}): JSX.Element=> {
+}): JSX.Element => {
   const [open, setOpen] = React.useState(false);
   const [rows, setRows] = React.useState<TransactionTable[]>(transactions);
   React.useEffect(() => {
@@ -49,8 +93,8 @@ const TransactionTable:React.FC<{
     const ttlTranx = rows.length;
     setTotalIncome(ttlIncome);
     setTotalExpenses(ttlExpense);
-    setTotalSaving(ttlSaving)
-    setTotalTransaction(ttlTranx)
+    setTotalSaving(ttlSaving);
+    setTotalTransaction(ttlTranx);
   }, [rows.length, rows]);
 
   const handleClickOpen = () => {
@@ -75,7 +119,33 @@ const TransactionTable:React.FC<{
       >
         ADD TRANSACTION
       </Button>
-      <DataGrid rows={rows} columns={columns} />
+      <Box
+      sx={{
+        width: '100%',
+        '& .super-app-theme--header': {
+          backgroundColor: '#A7947A',
+          color:colors.common.white
+        },
+        '& .super-app-theme--rowDebit':{
+          background:colors.red[300],
+          color:colors.common.white,
+          '&:hover': {
+            backgroundColor:colors.red[400],
+            color:colors.common.black,
+          },
+        },
+        '& .super-app-theme--rowCredit':{
+          background:colors.green[300],
+          color:colors.common.white,
+          '&:hover': {
+            backgroundColor:colors.green[400],
+            color:colors.common.black,
+          },
+       }
+      }}
+    >
+      <DataGrid getRowClassName={(params) => `super-app-theme--${params.row.category==='debit'?'rowDebit':'rowCredit'}`} rows={rows} columns={columns} />
+      </Box>
       <NewTransactionForm
         addTransaction={addTransaction}
         open={open}
@@ -83,6 +153,6 @@ const TransactionTable:React.FC<{
       />
     </div>
   );
-}
+};
 
 export default TransactionTable;
