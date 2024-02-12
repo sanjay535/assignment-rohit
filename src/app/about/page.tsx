@@ -1,6 +1,6 @@
 
 
-const DashBoardHome = () => {
+const AboutPage = () => {
   return (
     <div>
       About Us
@@ -8,4 +8,4 @@ const DashBoardHome = () => {
   )
 }
 
-export default DashBoardHome
+export default AboutPage

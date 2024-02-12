@@ -77,14 +77,14 @@ function Navigation() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
+              <MenuItem data-testid='menu-item' onClick={handleCloseNavMenu}>
                 <Typography textAlign='center'>
                   <Link href='/' onClick={handleCloseNavMenu}>
                     Dashboard
                   </Link>
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
+              <MenuItem data-testid='menu-item' onClick={handleCloseNavMenu}>
                 <Typography textAlign='center'>
                   <Link href='/about'>About Us</Link>
                 </Typography>

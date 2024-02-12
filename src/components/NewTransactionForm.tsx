@@ -65,7 +65,7 @@ export const NewTransactionForm: React.FC<{
           },
         }}
       >
-        <DialogTitle>Add New Transaction</DialogTitle>
+        <DialogTitle data-testid='dialog-title'>Add New Transaction</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please enters the details for the transaction
@@ -104,7 +104,7 @@ export const NewTransactionForm: React.FC<{
                 value={date}
                 onChange={(newValue) => setDate(newValue)}
                 className='w-[100%]'
-                label='Basic date picker'
+                label='Transaction date'
               />
             </LocalizationProvider>
           </div>
